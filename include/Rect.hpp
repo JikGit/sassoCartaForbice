@@ -14,7 +14,9 @@ private:
     sf::Vector2f vel;
     sf::Vector2f size;
     std::string type;
-    sf::Texture texture;  
+    static std::unordered_map<std::string, sf::Texture> textures;
+
+
 
 public:
     // Costruttore
@@ -26,6 +28,7 @@ public:
     bool controllaHit(Rect &rect);
     void fisicaCollisione(Rect &rect);
     void aggiornaFisica(sf::Time dt);
+    static void loadTextures();
 
     sf::Vector2f getPos();
     sf::Vector2f getVel();

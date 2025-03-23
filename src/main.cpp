@@ -16,15 +16,19 @@ int main() {
     window.setFramerateLimit(FRAME_RATE);
     sf::Clock deltaClock;
 
-    std::vector<Rect> insieme;
+    srand(time(NULL));
 
-    int numRect = 20;
+    std::vector<Rect> insieme;
+    Rect::loadTextures();
+
+    sf::Vector2f size = {50, 65};
+    int numRect = 300;
     while (numRect >= 0) {
-        Rect rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, {100,100}, {float(rand() % 400), float(rand() % 400)}, "sasso");
+        Rect rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, size, {float(rand() % 100), float(rand() % 400)}, "sasso");
         if (rand() % 3 == 0)
-            rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, {100,100}, {float(rand() % 400), float(rand() % 400)}, "carta");
+            rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, size, {float(rand() % 100), float(rand() % 400)}, "carta");
         else if (rand() % 3 == 1)
-            rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, {100,100}, {float(rand() % 400), float(rand() % 400)}, "forbice");
+            rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, size, {float(rand() % 100), float(rand() % 400)}, "forbice");
 
         bool found = false;
         for (int i = 0; i < insieme.size(); i++)

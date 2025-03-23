@@ -1,6 +1,8 @@
 #include "../include/Rect.hpp"
-#include "../include/TextureManager.hpp"
 #include <iostream>
+
+
+std::unordered_map<std::string, sf::Texture> Rect::textures;
 
 Rect::Rect(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f vel, std::string type, sf::Color color) 
         : pos(pos), vel(vel), size(size), type(type) {
@@ -10,14 +12,22 @@ Rect::Rect(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f vel, std::string ty
     setTextureFromType(this->type);
 }
 
+void Rect::loadTextures() {
+    std::string types[] = {"sasso", "carta", "forbice"};
+    
+    for (const auto& type : types) {
+        if (!textures[type].loadFromFile("src/img/" + type + ".png")) {
+            std::cerr << "Errore: impossibile caricare src/img/" << type << ".png" << std::endl;
+        }
+    }
+}
+
 void Rect::setTextureFromType(const std::string& type) {
-    try {
-        sf::Texture& texture = TextureManager::getTexture(type);
-        this->body.setTexture(&texture);
-    } catch (const std::runtime_error& e) {
-        std::cerr << "Error loading texture: " << e.what() << std::endl;
-        // Imposta un colore di fallback
-        this->body.setFillColor(sf::Color::Red);
+    auto it = textures.find(type);
+    if (it != textures.end()) {
+        this->body.setTexture(&it->second);  // ✅ Usa la texture già caricata
+    } else {
+        std::cerr << "Errore: texture non trovata per il tipo '" << type << "'" << std::endl;
     }
 }
 
