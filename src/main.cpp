@@ -23,12 +23,16 @@ int main() {
 
     sf::Vector2f size = {50, 65};
     int numRect = 300;
+
     while (numRect >= 0) {
-        Rect rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, size, {float(rand() % 100), float(rand() % 400)}, "sasso");
-        if (rand() % 3 == 0)
-            rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, size, {float(rand() % 100), float(rand() % 400)}, "carta");
-        else if (rand() % 3 == 1)
-            rect = Rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, size, {float(rand() % 100), float(rand() % 400)}, "forbice");
+        int scelta = rand() % 3;
+        std::string tipo;
+
+        if (scelta == 0)        tipo = "sasso";
+        else if (scelta == 1)   tipo = "carta";
+        else                    tipo = "forbice";
+
+        Rect rect({float(rand() % WIDTH), float(rand() % HEIGHT)}, size, {float(rand() % 200) + 100, float(rand() % 200) + 30}, tipo);
 
         bool found = false;
         for (int i = 0; i < insieme.size(); i++)
